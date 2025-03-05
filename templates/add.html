@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Dogs - Pet Haven</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/add.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Add Dogs</h1>
+    <form method="POST" enctype="multipart/form-data"> <!-- Important: enctype added -->
+      <label>Breed: <input type="text" name="breed" required></label><br>
+      <label>Age (months): <input type="number" name="age" required></label><br>
+      <label>Price (₹): <input type="number" name="price" required></label><br>
+      <label>Traits: <input type="text" name="traits" required></label><br>
+      <label>Vaccination Details: <input type="text" name="vaccination_details" required></label><br>
+      <label>Health Information: <input type="text" name="health_info" required></label><br>
+      <label>Grooming Info: <input type="text" name="grooming_info" required></label><br>
+      <label>Trainability: <input type="text" name="trainability" required></label><br>
+      <label>Height (inches): <input type="number" name="height" required></label><br>
+      <label>Weight (kgs): <input type="number" name="weight" required></label><br>
+      
+      <!-- Updated Image Upload Field -->
+      <label>Upload Image: <input type="file" name="image" accept="image/*" required></label><br>
+      
+      <button type="submit">Add Dog</button>
+    </form>
+    <a href="{{ url_for('admin_view') }}" class="back-link">Back to Gallery</a>
+  </div>
+</body>
+</html>

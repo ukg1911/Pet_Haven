@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background: url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg') no-repeat center center/cover;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 600px;
+    width: 85%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #222;
+    font-weight: 700;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #444;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #333;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-color: #4CAF50;
+    box-shadow: 0 0 4px rgba(76, 175, 80, 0.5);
+    outline: none;
+  }
+
+  button {
+    padding: 12px;
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  button:hover {
+    background: linear-gradient(90deg, #8BC34A, #4CAF50);
+    transform: scale(1.02);
+  }
+
+  @media screen and (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+    h1 {
+      font-size: 20px;
+    }
+    label {
+      font-size: 12px;
+    }
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      font-size: 12px;
+    }
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }

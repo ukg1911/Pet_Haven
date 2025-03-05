@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Haven - Canine Commerce</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/2.style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+      <span>Pet Haven</span>
+    </div>
+    <div class="user-container">
+      {% if admin %}
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/admin_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="/admin" class="nav-link" id="dogs-link"><i class="fas fa-dog"></i> Dogs</a></li>
+          <li><a href="{{ url_for('add_dog') }}" class="nav-link" id="manage-link"><i class="fas fa-plus"></i> Add New Dog</a></li>
+        </ul>
+      </nav>
+      {% endif %}
+
+      <nav>
+        <ul class="nav-links">
+          {% if not admin %}
+          <li><a href="/customer_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="/d" class="nav-link" id="dogs-link"><i class="fas fa-dog"></i> Dogs</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle"><i class="fa-solid fa-user"></i> Account <span>&#9662;</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/wishlist"><i class="fas fa-heart"></i> My Wishlist</a></li>
+              <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </nav>
+
+  <div class="main-container">
+  
+    <!-- Filter Sidebar (Only for Admins & Users Separately) -->
+    <aside class="filter-sidebar">
+      <h3>Filters</h3>
+      <form method="GET" action="{% if admin %}/admin{% else %}/d{% endif %}">
+        <label for="breed">Breed</label>
+        <input type="text" name="breed" id="breed" placeholder="Enter breed"
+          value="{{ request.args.get('breed', '') }}">
+  
+        <label for="age">Age</label>
+        <select name="age" id="age">
+          <option value="">Select Age Range</option>
+          <option value="<5" {% if request.args.get('age')=='<5' %}selected{% endif %}> <5 months</option>
+          <option value="5-10" {% if request.args.get('age')=='5-10' %}selected{% endif %}>5-10 months</option>
+          <option value="10-15" {% if request.args.get('age')=='10-15' %}selected{% endif %}>10-15 months</option>
+          <option value="15-20" {% if request.args.get('age')=='15-20' %}selected{% endif %}>15-20 months</option>
+          <option value=">20" {% if request.args.get('age')=='>20' %}selected{% endif %}> >20 months</option>
+        </select>
+  
+        <label for="price">Price</label>
+        <select name="price" id="price">
+          <option value="">Select Price Range</option>
+          <option value="<10000" {% if request.args.get('price')=='<10000' %}selected{% endif %}> < ₹10000</option>
+          <option value="10000-20000" {% if request.args.get('price')=='10000-20000' %}selected{% endif %}>₹10000 - ₹20000</option>
+          <option value="20000-30000" {% if request.args.get('price')=='20000-30000' %}selected{% endif %}>₹20000 - ₹30000</option>
+          <option value="30000-40000" {% if request.args.get('price')=='30000-40000' %}selected{% endif %}>₹30000 - ₹40000</option>
+          <option value=">40000" {% if request.args.get('price')=='>40000' %}selected{% endif %}> > ₹40000</option>
+        </select>
+  
+        <button id="apply-filters" type="submit">Apply Filters</button>
+        <button id="clear-filters" type="button">Clear Filters</button>
+      </form>
+    </aside>
+  
+    <section class="grid-section">
+      {% if dogs|length == 0 %}
+      <div id="no-results-message">
+        <p>No Results.</p>
+      </div>
+      {% endif %}
+  
+      {% for dog in dogs %}
+      <div class="grid-item" data-id="{{ dog.id }}">
+        <img src="{{ url_for('static', filename=dog.image) }}" alt="{{ dog.breed }}">
+        <h4>{{ dog.breed }}</h4>
+        <p>Age: {{ dog.age }} months</p>
+        <p>Price: ₹{{ dog.price }}</p>
+  
+        <!-- Buttons Container for View Details and Wishlist -->
+        <div class="buttons-container">
+          <a href="{% if admin %}{{ url_for('admin_dog_description', id=dog.id) }}{% else %}{{ url_for('user_dog_description', id=dog.id) }}{% endif %}"
+            class="view-details-btn" aria-label="View Details">
+            <i class="fas fa-info-circle"></i>
+          </a>
+  
+          {% if not admin %}
+          <button class="add-to-wishlist" data-id="{{ dog.id }}" aria-label="Add to Wishlist">
+            <i class="far fa-heart"></i>
+            <i class="fas fa-heart" style="display: none;"></i>
+          </button>
+          {% endif %}
+        </div>
+  
+        {% if not admin %}
+        <button class="add-to-cart" data-id="{{ dog.id }}">Add to Cart</button>
+        {% endif %}
+  
+        {% if admin %}
+        <div class="admin-buttons">
+          <form action="{{ url_for('remove_dog', id=dog.id) }}" method="POST">
+            <button type="submit" class="icon-btn remove-btn">
+              <i class="fa fa-trash"></i>
+              <span>Remove</span>
+            </button>
+          </form>
+          <a href="{{ url_for('edit_dog', id=dog.id) }}" class="icon-btn edit-btn">
+            <i class="fa fa-edit"></i>
+            <span>Edit</span>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </section>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/2.script.js') }}"></script>
+</body>
+
+</html>

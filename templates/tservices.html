@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Services</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style4.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+  
+
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">
+       <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+ <span>Pet Haven</span>
+   </div>
+   <ul class="nav-links">
+     <li><a href="/trainer_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+   </ul>
+</nav>
+
+  <div class="container">
+    <h1>Our Services</h1>
+    <section class="services-overview">
+      <div class="cards">
+        {% for service in services %}
+        <div class="card">
+          <h3>{{ service.service_name }}</h3>
+          <p><strong>Duration:</strong>
+            {% if 'hour' in service.duration %}
+            {{ service.duration.split(' ')[0] | int * 60 }} minutes
+            {% elif 'minute' in service.duration %}
+            {{ service.duration.split(' ')[0] }} minutes
+            {% else %}
+            {{ service.duration }} minutes
+            {% endif %}
+          </p>
+          <p><strong>Cost: ₹</strong> {{ service.cost }}</p>
+          <p><strong>Description:</strong> {{ service.description }}</p>
+          <div class="button-container">
+            <button class="add-to-cart" data-id="{{ service.id }}" onclick="window.location.href='{{ url_for('trainers_by_service2', service_id=service.id) }}'">View Trainers
+            </button>
+          </div>          
+        </div>
+        {% else %}
+        <p>No services available</p>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+  
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Details-Pet Haven</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Edit Dog Details</h1>
+    <form method="POST">
+      <!-- Fill each input field with the current dog's information -->
+      <label for="breed">Breed:</label>
+      <input type="text" name="breed" id="breed" value="{{ dog.breed }}" required>
+
+      <label for="age">Age:</label>
+      <input type="number" name="age" id="age" value="{{ dog.age }}" required>
+
+      <label for="price">Price:</label>
+      <input type="number" name="price" id="price" value="{{ dog.price }}" required>
+
+      <label for="traits">Traits:</label>
+      <input type="text" name="traits" id="traits" value="{{ dog.traits }}" required>
+
+      <label for="vaccination_details">Vaccination Details:</label>
+      <input type="text" name="vaccination_details" id="vaccination_details" value="{{ dog.vaccination_details }}"
+        required>
+
+      <label for="health_info">Health Information:</label>
+      <input type="text" name="health_info" id="health_info" value="{{ dog.health_info }}" required>
+
+      <label for="grooming_info">Grooming Info:</label>
+      <input type="text" name="grooming_info" id="grooming_info" value="{{ dog.grooming_info }}" required>
+
+      <label for="trainability">Trainability:</label>
+      <input type="text" name="trainability" id="trainability" value="{{ dog.trainability }}" required>
+
+      <label for="height">Height:</label>
+      <input type="number" name="height" id="height" value="{{ dog.height }}" required>
+
+      <label for="weight">Weight:</label>
+      <input type="number" name="weight" id="weight" value="{{ dog.weight }}" required>
+
+      <label for="image">Image URL:</label>
+      <input type="text" name="image" id="image" value="{{ dog.image }}" required>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/appointment.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+           <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+     <span>Pet Haven</span>
+       </div>
+       <ul class="nav-links">
+         <li><a href="/customer_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+         <li><a href="/services" class="nav-link" id="services-link"><i class="fa-solid fa-spa"></i> Services</a></li>
+         <li><a href="{{ url_for('trainers_by_service', service_id=service.id) }}" class="nav-link" id="tariners-link"><i class="fas fa-running"></i> Trainers</a></li>
+         <li class="dropdown">
+           <a href="#" class="dropdown-toggle"><i class="fa-solid fa-user"></i> Account <span>&#9662;</span></a>
+           <ul class="dropdown-menu">
+             <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+           </ul>
+         </li>           
+       </ul>
+    </nav>
+    <div class="appointment-container">
+        <div class="booking-details">
+         <h1>Book An Appointment</h1>
+        <form action="{{ url_for('confirm_appointment', service_id=service.id) }}" method="POST" id="bookingForm">
+            <input type="hidden" name="trainer_id" value="{{ trainer.id }}">
+            <input type="hidden" name="service_id" value="{{ service.id }}">
+            <div class="form-group">
+                <label for="date">Select Date:</label>
+                <input type="date" id="date" name="date" required 
+                       min="{{ today }}" max="{{ max_date }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="time_slot">Select Time Slot:</label>
+                <select id="time_slot" name="time_slot" required disabled>
+                    <option value="">Select a date </option>
+                </select>
+            </div>
+            <div class="booked-slots-container">
+    <h3>Booked Slots</h3>
+    <ul id="bookedSlotsList">
+        <!-- Booked slots will be dynamically populated here -->
+    </ul>
+</div>
+
+            <button type="submit" id="submitBtn" disabled>Confirm </button>
+
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('date').addEventListener('change', async function () {
+        const dateInput = this.value;
+        const trainerId =" {{ trainer.id }}"; // Ensure this is passed from Flask.
+        const timeSlotSelect = document.getElementById('time_slot');
+        const bookedSlotsList = document.getElementById('bookedSlotsList'); 
+
+        // Reset the dropdown and booked slots
+        timeSlotSelect.innerHTML = '<option value="">Loading available slots...</option>';
+        timeSlotSelect.disabled = true;
+        bookedSlotsList.innerHTML = '<li>Loading booked slots...</li>';
+
+        try {
+            const response = await fetch('/get-available-slots', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ date: dateInput, trainer_id: trainerId }),
+            });
+
+            if (response.ok) {
+                const { availableSlots, bookedSlots } = await response.json();
+
+                // Populate available slots
+                timeSlotSelect.innerHTML = '<option value="">Select a time slot...</option>';
+                if (availableSlots && availableSlots.length) {
+                    availableSlots.forEach(slot => {
+                        const option = document.createElement('option');
+                        option.value = slot.id;
+                        option.textContent = slot.time;
+                        timeSlotSelect.appendChild(option);
+                    });
+                    timeSlotSelect.disabled = false;
+                } else {
+                    timeSlotSelect.innerHTML = '<option value="">No available slots</option>';
+                }
+
+                // Populate booked slots
+                bookedSlotsList.innerHTML = '';
+                if (bookedSlots && bookedSlots.length) {
+                    bookedSlots.forEach(slot => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = slot.time;
+                        bookedSlotsList.appendChild(listItem);
+                    });
+                } else {
+                    bookedSlotsList.innerHTML = '<li>No booked slots for this day.</li>';
+                }
+            } else {
+                throw new Error('Failed to fetch slots');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            timeSlotSelect.innerHTML = '<option value="">Error loading slots</option>';
+            bookedSlotsList.innerHTML = '<li>Error loading booked slots</li>';
+        }
+    });
+
+    // Enable submit button only if a time slot is selected
+    document.getElementById('time_slot').addEventListener('change', function () {
+        document.getElementById('submitBtn').disabled = !this.value;
+    });
+
+    // Add to Cart functionality
+    const addToCartButton = document.getElementById("addToCartButton");
+    if (addToCartButton) {
+        addToCartButton.addEventListener("click", function () {
+            const selectedDate = document.getElementById("date").value;
+            const selectedTimeSlot = document.getElementById("time_slot").value;
+            const service = "{{ service.name }}";
+            const trainer = "{{ trainer.name }}";
+
+            if (!selectedDate || !selectedTimeSlot) {
+                alert("Please select a date and time slot before adding to cart.");
+                return;
+            }
+
+            const cart = {
+                service: service,
+                trainer: trainer,
+                date: selectedDate,
+                timeSlot: selectedTimeSlot
+            };
+
+            localStorage.setItem("appointmentCart", JSON.stringify(cart));
+            window.location.href = "cart.html";
+        });
+    }
+</script>
+</body>
+</html>

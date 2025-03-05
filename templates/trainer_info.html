@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        .trainer-details {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .action-buttons button {
+            padding: 0.6rem 1.2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .accept-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .reject-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .accept-btn:hover {
+            background-color: #218838;
+        }
+        .reject-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="trainer-details">
+            <h3>Trainer Information</h3>
+            <p><strong>Name:</strong> {{ trainer.full_name }}</p>
+            <p><strong>Phone Number:</strong> {{ trainer.phone_number }}</p>
+            <p><strong>Email:</strong> {{ trainer.email }}</p>
+            <p><strong>Website:</strong> <a href="{{ trainer.website }}" target="_blank">{{ trainer.website }}</a></p>
+            <p><strong>Certifications:</strong> {{ trainer.certification_body }} - {{ trainer.certification_number }} ({{ trainer.certification_date }})</p>
+            <p><strong>Degree:</strong> {{ trainer.degree }}</p>
+            <p><strong>Institution:</strong> {{ trainer.institution_name }} (Graduated in {{ trainer.graduation_year }})</p>
+            <p><strong>Experience:</strong> {{ trainer.experience_years }} years</p>
+            <p><strong>Species:</strong> {{ trainer.species }}</p>
+            <p><strong>Behavioral Issues:</strong> {{ trainer.behavioral_issues }}</p>
+            <p><strong>Training Philosophy:</strong> {{ trainer.training_philosophy }}</p>
+            <p><strong>Approach to Behavioral Issues:</strong> {{ trainer.approach_behavioral_issues }}</p>
+            <p><strong>References:</strong> {{ trainer.references }}</p>
+            <p><strong>Reviews:</strong> {{ trainer.reviews }}</p>
+            <p><strong>Insurance Coverage:</strong> {{ trainer.insurance_coverage }}</p>
+            <p><strong>Insurance Provider:</strong> {{ trainer.insurance_provider }}</p>
+            <p><strong>Training Plans:</strong> {{ trainer.training_plans }}</p>
+            <p><strong>Progress Monitoring:</strong> {{ trainer.progress_monitoring }}</p>
+            <p><strong>Continued Education:</strong> {{ trainer.cont inued_education }}</p>
+            <p><strong>Communication Style:</strong> {{ trainer.communication_style }}</p>
+            <p><strong>Ethical Considerations:</strong> {{ trainer.ethical_considerations }}</p>
+            <p><strong>Facilities and Equipment:</strong> {{ trainer.facilities_equipment }}</p>
+            <p><strong>Hours of Operation:</strong> {{ trainer.hours_of_operation }}</p>
+            <p><strong>Session Fees:</strong> {{ trainer.session_fees }}</p>
+            <p><strong>Additional Notes:</strong> {{ trainer.additional_notes }}</p>
+
+            <div class="action-buttons">
+                <form action="{{ url_for('accept_trainer', trainer_id=trainer.id) }}" method="POST">
+                    <button type="submit" class="accept-btn">Accept Trainer</button>
+                </form>
+                <form action="{{ url_for('reject_trainer', trainer_id=trainer.id) }}" method="POST">
+                    <button type="submit" class="reject-btn">Reject Trainer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

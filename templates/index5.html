@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Analytics Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background: #f5f5f5; 
+        }
+        .dashboard { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .metrics { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 30px; 
+        }
+        .metric-card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+            text-align: center;
+        }
+        .metric-title { 
+            color: #666; 
+            font-size: 14px; 
+            margin-bottom: 8px; 
+        }
+        .metric-value { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #333; 
+        }
+        .charts { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 20px;
+        }
+        .chart-container { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+        }
+        @media (max-width: 768px) {
+            .charts {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-title">Total Revenue</div>
+                <div class="metric-value" id="totalRevenue">₹0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Net Profit</div>
+                <div class="metric-value" id="netProfit">₹0</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Total Bookings</div>
+                <div class="metric-value" id="totalBookings">0</div>
+            </div>
+        </div>
+        
+        <div class="charts">
+            <div class="chart-container">
+                <canvas id="revenueBreakdown"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="monthlyTrends"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="yearlyTrends"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="trainerPerformance"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="competitionBreakdown"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="dogRevenue"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatCurrency(value) {
+            return '₹' + value.toLocaleString('en-IN');
+        }
+
+        fetch('/api/revenue')
+            .then(response => response.json())
+            .then(data => {
+                // Update metrics
+                document.getElementById('totalRevenue').textContent = formatCurrency(data.total_revenue);
+                document.getElementById('netProfit').textContent = formatCurrency(data.net_profit);
+                document.getElementById('totalBookings').textContent = data.total_bookings;
+
+                // Revenue Breakdown Chart
+                new Chart(document.getElementById('revenueBreakdown'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(data.revenue_breakdown),
+                        datasets: [{
+                            data: Object.values(data.revenue_breakdown),
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Revenue Breakdown by Type'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + formatCurrency(context.raw);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Monthly Trends Chart
+                new Chart(document.getElementById('monthlyTrends'), {
+                    type: 'line',
+                    data: {
+                        labels: Object.keys(data.monthly_trends),
+                        datasets: [{
+                            label: 'Monthly Revenue',
+                            data: Object.values(data.monthly_trends),
+                            borderColor: '#36A2EB',
+                            tension: 0.1,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Monthly Revenue Trends'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: value => formatCurrency(value)
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Yearly Trends Chart
+                new Chart(document.getElementById('yearlyTrends'), {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data.yearly_trends),
+                        datasets: [{
+                            label: 'Yearly Revenue',
+                            data: Object.values(data.yearly_trends),
+                            backgroundColor: '#FFCE56'
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Yearly Revenue Trends'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: value => formatCurrency(value)
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Trainer Performance Chart (Bookings per Trainer)
+                new Chart(document.getElementById('trainerPerformance'), {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data.trainer_performance),
+                        datasets: [{
+                            label: 'Number of Bookings',
+                            data: Object.values(data.trainer_performance),
+                            backgroundColor: '#36A2EB'
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Trainer Performance (Bookings)'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Competition Revenue Breakdown Chart
+                new Chart(document.getElementById('competitionBreakdown'), {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(data.competition_breakdown),
+                        datasets: [{
+                            data: Object.values(data.competition_breakdown),
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Competition Revenue Breakdown'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + formatCurrency(context.raw);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Dog Revenue Chart
+                new Chart(document.getElementById('dogRevenue'), {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data.dog_revenue),
+                        datasets: [{
+                            label: 'Revenue by Dog Breed',
+                            data: Object.values(data.dog_revenue),
+                            backgroundColor: '#4BC0C0'
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Revenue by Dog Breed'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: value => formatCurrency(value)
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

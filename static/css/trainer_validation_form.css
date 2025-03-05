@@ -1,0 +1,151 @@
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8f5; /* Soft background color */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Main Container */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    color: #2e7d32; /* Greenish color for the main header */
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+h2 {
+    color: #1b5e20; /* Dark green for section headers */
+    border-bottom: 2px solid #a5d6a7; /* Soft green underline */
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    font-size: 1.6em;
+}
+
+/* Label Styles */
+label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 1em;
+    color: #555;
+}
+
+/* Input, Textarea, and Select Styling */
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="url"],
+input[type="date"],
+input[type="number"],
+textarea,
+select,
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Textarea Specific Styling */
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Button Styling */
+button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #2e7d32; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #1b5e20; /* Darker green on hover */
+    transform: translateY(-2px);
+}
+
+button:active {
+    background-color: #388e3c; /* Even darker on click */
+    transform: translateY(0);
+}
+
+/* Section Styling */
+section {
+    margin-bottom: 25px;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+/* Focused Input/Select/Textarea Styling */
+input:focus, textarea:focus, select:focus {
+    border-color: #4caf50; /* Bright green focus border */
+    outline: none;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.4); /* Light green glow */
+}
+
+/* Placeholder Styling */
+input::placeholder, textarea::placeholder {
+    color: #aaa; /* Lighter placeholder text */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    button {
+        padding: 10px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="url"],
+    input[type="date"],
+    input[type="number"],
+    textarea,
+    select,
+    input[type="file"] {
+        padding: 10px;
+    }
+}

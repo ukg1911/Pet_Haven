@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Trainer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add.css') }}">
+  </head>
+  <body>
+
+    <div class="container">
+      <h1>Add New Trainer</h1>
+      <form method="POST" enctype="multipart/form-data" action="{{ url_for('add_trainer', service_id=service.id) }}">
+
+      <!--<form
+        id="trainerForm"
+        action="{{ url_for('add_trainer', service_id=service.id) }}"   Ensure service_id is passed 
+        method="POST"
+        enctype="multipart/form-data">-->
+         
+        <!-- Trainer's Name -->
+        <label for="trainer-name">Trainer's Name:</label>
+        <input
+          type="text"
+          id="trainer-name"
+          name="trainer-name"
+          placeholder="Enter trainer's name"
+          pattern="^[A-Za-z\s]{3,50}$"
+          title="Name should only contain letters and spaces, and be 3-50 characters long."
+          required
+        />
+
+        <!-- Trainer's number -->
+        <label for="trainer-name">Trainer's Mobile Number:</label>
+        <input
+          type="text"
+          id="trainer-name"
+          name="trainer-number"
+          placeholder="Enter trainer's mobile number"
+          title=""
+          required
+        />
+  
+        <!-- Trainer's Experience -->
+        <label for="experience">Trainer's Experience (in years):</label>
+        <input
+          type="number"
+          id="experience"
+          name="experience"
+          placeholder="Enter experience in years"
+          min="0"
+          max="50"
+          title="Experience must be a number between 0 and 50."
+          required
+        />
+  
+        <!-- Trainer's Rating -->
+        <label for="rating">Trainer's Rating (1-5):</label>
+        <input
+          type="number"
+          id="rating"
+          name="rating"
+          placeholder="Enter rating"
+          min="1"
+          max="5"
+          step="0.1"
+          title="Rating must be a number between 1 and 5, with up to one decimal place."
+          required
+        />
+  
+        <!-- Trainer's Description -->
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          placeholder="Enter a brief description about the trainer"
+          minlength="10"
+          maxlength="200"
+          title="Description must be between 10 and 200 characters."
+          required
+        ></textarea>
+  
+        <!-- Trainer's Profile Picture -->
+        <label for="profile-pic">Upload Trainer's Profile Picture:</label>
+        <input
+          type="file"
+          id="profile-pic"
+          name="profile-pic"
+          accept="image/*"
+          title="Please upload a valid image file."
+          required
+        />
+  
+        <button type="submit">Add Trainer</button>
+        <a href= "{{ url_for('admin_trainer', service_id=service.id) }}"><center>Back to Trainers</center></a>
+<!-- Link to admin_trainer -->
+      </form>
+    </div>
+  
+    <!-- <img src="/static/images/puppy.jpg" class="pet" alt="Pet" /> -->
+  
+    <script>
+      document
+  .getElementById("trainerForm")
+  .addEventListener("submit", function (event) {
+    const trainerName = document
+      .getElementById("trainer-name")
+      .value.trim();
+    const experience = parseInt(
+      document.getElementById("experience").value,
+      10
+    );
+    const rating = parseFloat(document.getElementById("rating").value);
+    const description = document
+      .getElementById("description")
+      .value.trim();
+    const profilePic = document.getElementById("profile-pic").files[0];
+
+    // Validation checks
+    if (!trainerName.match(/^[A-Za-z\s]{3,50}$/)) {
+      alert(
+        "Trainer's Name should only contain letters and spaces, and be 3-50 characters long."
+      );
+      event.preventDefault();
+      return;
+    }
+
+    if (isNaN(experience) || experience < 0 || experience > 50) {
+      alert("Experience must be a number between 0 and 50 years.");
+      event.preventDefault();
+      return;
+    }
+
+    if (isNaN(rating) || rating < 1 || rating > 5) {
+      alert("Rating must be a number between 1 and 5.");
+      event.preventDefault();
+      return;
+    }
+
+    if (description.length < 10 || description.length > 200) {
+      alert("Description must be between 10 and 200 characters.");
+      event.preventDefault();
+      return;
+    }
+
+    if (!profilePic) {
+      alert("Please upload a valid profile picture.");
+      event.preventDefault();
+      return;
+    }
+
+    // Check file type
+    const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedFileTypes.includes(profilePic.type)) {
+      alert(
+        "Profile picture must be a valid image file (JPEG, PNG, or JPG)."
+      );
+      event.preventDefault();
+      return;
+    }
+
+    // No need for redirection in JavaScript if form is valid
+  });
+
+    </script>
+  </body>
+</html>

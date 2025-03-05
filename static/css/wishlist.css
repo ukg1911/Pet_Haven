@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/*navbar*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #28a745;
+  padding: 1rem 2rem;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 70px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo img {
+  height: 60px;
+  width: 80px;
+  object-fit: contain;
+  background-color: transparent;
+  display: block;
+}
+
+.logo span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Pacifico', cursive;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo span::after {
+  content: '\f1b0';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: black;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.nav-links li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Wishlist container */
+h3 {
+  text-align: center;
+  margin-top: 5px;
+  padding: 5px;
+  font-size: 20px;
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+}
+
+.main-container {
+  padding: 10px 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 0rem;
+  row-gap: 1rem;
+  justify-items: center;
+  align-items: center;
+  margin-left: 0rem;
+  margin-right: 1rem;
+  height: 100vh; /* Full height for centering */
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg') no-repeat center center fixed;
+  background-size: cover;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+
+.wishlist-container {
+  padding: 10px 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 0rem;
+  row-gap: 1rem;
+  justify-items: center;
+  align-items: center;
+  margin-left: 0rem;
+  margin-right: 1rem;
+}
+
+.wishlist-item {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 0.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-left: 1rem;
+  margin-right: 0rem;
+}
+
+.wishlist-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.wishlist-item h4 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.wishlist-item p {
+  margin: 5px 0;
+  font-size: large;
+  color: #555;
+}
+
+
+/* buttons */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.remove-from-wishlist,
+.add-to-cart-from-wishlist {
+  border: none;
+  padding: 10px 15px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.add-to-cart-from-wishlist i {
+  color: #28a745;
+}
+.remove-from-wishlist i {
+  color: #c82333;
+}
+
+
+.remove-from-wishlist:hover,
+.add-to-cart-from-wishlist:hover{
+  transform: translateY(-2px);
+}
+
+.remove-from-wishlist:hover {
+  background-color: transparent;
+}
+
+
+
+.parent-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  height: 60vh;          
+  width: 100vw;             
+}
+
+h5 {
+  font-size: 18px;
+  font-family: 'Playfair Display', serif;
+  padding: 20px;
+}
+

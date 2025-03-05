@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - Pet Haven</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+</head>
+<body>
+  <!-- Navbar Section -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+      <span>Pet Haven</span>
+    </div>
+    <div class="user-container">
+      <nav>
+        <ul class="nav-links">
+          <li>
+            <a href="/d" class="nav-link" id="dogs-link"><i class="fas fa-dog"></i> Dogs</a>
+            <a href="/services" class="nav-link" id="services-link"><i class="fa-solid fa-spa"></i> Services</a>
+            <a href="/c" class="nav-link" id="events-link"><i class="fa-solid fa-calendar-check"></i> Events</a>
+            <a href="/wishlist"><i class="fas fa-heart"></i> My Wishlist</a></li>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </nav>
+
+   <!-- Main Container -->
+   <div class="main-container">
+    <!-- Shopping Cart Section -->
+    <section class="cart-items">
+      <h3><center>Shopping Cart <i class="fas fa-shopping-cart"></i></center></h3>
+      <br>
+      {% if cart_items %}
+        {% for item in cart_items %}
+          <div class="cart-item">
+            {% if item['image'] %}
+              <img src="{{ url_for('static', filename=item['image']) }}" alt="{{ item['title'] or item['breed'] }}">
+            {% endif %}
+            <div class="cart-item-details">
+              <h4>{{ item['title'] or item['breed'] or item['tname']  }}</h4>
+              {% if item['date'] %}<p>Date: {{ item['date']}}</p>{% endif %}
+              {% if item['time'] %}<p>Time: {{ item['time']}}</p>{% endif %}
+              {% if item['age'] %}<p>Age: {{ item['age'] }} months</p>{% endif %}
+              {% if item['booking_date'] %}<p>Booking Date: {{ item['booking_date'] }}</p>{% endif %}
+              {% if item['service_name'] %}<p>Service: {{ item['service_name'] }}</p>{% endif %}
+              <p>Price: ₹ {{ item['price'] }}</p>
+              {% if item['title'] %}
+              {% endif %}
+            </div>
+            <div class="cart-item-actions">
+              {% if item['breed'] and item['quantity'] is defined %}
+                <button class="decrease-quantity" data-id="{{ item['dog_id'] }}">-</button>
+                <span class="quantity" id="quantity-{{ item['dog_id'] }}">{{ item['quantity'] }}</span>
+                <button class="increase-quantity" data-id="{{ item['dog_id'] }}">+</button>
+              {% endif %}            
+              <button class="remove-from-cart" data-id="{{ item['id'] }}">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <br><p><center>No items in your cart</center></p><br>
+      {% endif %}
+      <a href="/customer_dashboard">
+        <button class="continue-shopping-btn">Continue Shopping</button>
+      </a>
+    </section>
+
+    <!-- Order Summary Section -->
+    <aside class="order-summary">
+      <h3><center>Order Summary</center></h3>
+      <br>
+      <div class="items-count">
+        <span>Total Items</span>
+        <span id="total-items">{{ total_quantity }}</span>
+      </div>
+      <div class="total-price">
+        <span>Total Price</span>
+        <span id="cart-total">₹ {{ total_price }}</span>
+      </div>
+      <a href="{{ url_for('checkout') }}">
+        <button class="buynow-btn">Checkout</button>
+      </a>
+    
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show notification" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% endwith %}
+    </aside>
+  </div>
+
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Services</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+  <style>
+    /* General Styles */
+    body {
+      font-family: "Poppins", serif;
+      font-weight: 100;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a0a0a;
+    }
+
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 30px;
+      gap: 3rem;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #28a745;
+      padding: 1rem 2rem;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      z-index: 1000;
+    }
+
+    /* Logo and navbar links */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo img {
+      height: 60px;
+      width: 80px;
+      object-fit: contain;
+      background-color: transparent;
+    }
+
+    .logo span {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+      font-family: 'Pacifico', cursive;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      background: rgba(8, 6, 6, 0.2);
+    }
+
+    /* Card Styles */
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    /* Card Headings */
+    .card h3 {
+      color: #333;
+      /* Dark color for side headings */
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      font-size: 24px;
+    }
+
+    /* Regular Text Inside Cards */
+    .card p {
+      margin: 10px 0;
+      font-size: 18px;
+      color: #000;
+      /* Regular text color */
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+
+    .card p strong {
+      color: brown;
+      font-weight: 800;
+    }
+
+    .card a {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+
+    /* Buttons */
+    .delete-button {
+      background-color: #e92323;
+      /* Red for remove */
+      color: white;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      font-family: Arial, Helvetica, sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .delete-button:hover {
+      background-color: #e03333;
+      /* Darker red on hover */
+    }
+
+    .card .edit-button {
+      background-color: #007bff;
+      /* Blue for edit */
+      color: white;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      font-family: Arial, Helvetica, sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .card .edit-button:hover {
+      background-color: #0056b3;
+      /* Darker blue on hover */
+    }
+
+    .view-trainers-button {
+      background-color: #28a745;
+      /* Green for view trainers */
+      color: white;
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-family: Arial, Helvetica, sans-serif;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .view-trainers-button:hover {
+      background-color: #218838;
+      /* Darker green on hover */
+    }
+
+    /* Button container */
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      /* Stack buttons vertically */
+      gap: 10px;
+      /* Space between buttons */
+      margin-top: 20px;
+      align-items: center;
+    }
+
+    /* Add service button */
+    .add-service-btn {
+      text-align: center;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .add-service-btn a {
+      background-color: #ff8c00;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .add-service-btn a:hover {
+      background-color: #e07b00;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+      <span>Pet Haven</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="/admin_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="{{ url_for('add_services') }}" class="nav-link"><i class="fas fa-plus"></i> Add Service</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Our Services</h1>
+  </header>
+
+  <div class="cards">
+    {% for service in services %}
+    <div class="card">
+      <h3>{{ service.service_name }}</h3>
+      <p>Duration:
+        {% if 'hour' in service.duration %}
+        {{ service.duration.split(' ')[0] | int * 60 }} minutes
+        {% elif 'minute' in service.duration %}
+        {{ service.duration.split(' ')[0] }} minutes
+        {% else %}
+        {{ service.duration }} minutes
+        {% endif %}
+      </p>
+      <p><strong>Cost: ₹</strong> {{ service.cost }}</p>
+      <p><strong>Description:</strong> {{ service.description }}</p>
+      <div class="button-container">
+        <div class="edit-remove-buttons">
+          <a href="{{ url_for('edit_service', service_id=service.id) }}" class="edit-button"><i class="fa fa-edit"></i>
+            Edit</a>
+          <form action="{{ url_for('delete_service', service_id=service.id) }}" method="POST" style="display: inline;">
+            <input type="hidden" name="_method" value="POST">
+            <button type="submit" class="delete-button"><i class="fa fa-trash"></i> Remove</button>
+            <a href="{{ url_for('admin_trainer', service_id=service.id) }}" class="view-trainers-button">View
+              Trainers</a>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+</body>
+
+</html>

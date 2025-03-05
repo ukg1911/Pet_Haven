@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Details</title>
+    <style>
+        /* Green theme styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8f0;  /* Light green background */
+            color: #2c6e34; /* Dark green text */
+            margin: 20px;
+        }
+
+        h1 {
+            color: #3c7d2e; /* Darker green for the header */
+            text-align: center;
+        }
+
+        h2 {
+            color: #3c7d2e; /* Darker green for subheadings */
+        }
+
+        p, ul {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Green button */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        a:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        a:active {
+            background-color: #3e8e41; /* Even darker green when clicked */
+        }
+
+        .notification, .registration-details {
+            background-color: #ffffff; /* White background for sections */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Notification Details</h1>
+
+    <div class="notification">
+        <p><strong>Message:</strong> {{ notification.message }}</p>
+        <p><strong>Created At:</strong> {{ notification.created_at }}</p>
+    </div>
+
+    <h2>Registration Details</h2>
+    <div class="registration-details">
+        <ul>
+            <li><strong>Name:</strong> {{ registration_details.name }}</li>
+            <li><strong>Email:</strong> {{ registration_details.email }}</li>
+            <li><strong>Mobile:</strong> {{ registration_details.mobile }}</li>
+            <li><strong>Role:</strong> {{ registration_details.role }}</li>
+        </ul>
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+/* General Styles */
+body {
+  font-family: "Poppins", serif;
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(188, 188, 188, 0.5)), url(./d1.jpg) no-repeat center center/cover;
+  background-color: #f9f9f9;
+}
+
+
+/* nav bar  */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #28a745;
+  padding: 1rem 2rem;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position:relative; 
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 1000; 
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo img {
+  height: 60px;
+  width: 80px;
+  object-fit: contain;
+  background-color: transparent;
+}
+
+.logo span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Pacifico', cursive;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo span::after {
+  content: '\f1b0';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: black;
+}
+
+.nav-links {
+  list-style: none;
+   display: flex;
+   justify-content: space-around; 
+   align-items: center;
+   gap: 0; 
+   margin: 0;
+   padding: 0;
+  }
+
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.nav-links li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem; /* Reduced padding for mobile */
+  }
+
+}
+
+
+.navbar .dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+.navbar .dropdown .dropdown-toggle {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar .dropdown .dropdown-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+.navbar .dropdown .dropdown-menu {
+  display: none; 
+  position: absolute;
+  top: calc(100% + 5px); 
+  right: 0; 
+  background-color: #333;
+  border-radius: 8px;
+  min-width: 200px;
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+
+.navbar .dropdown .dropdown-menu li {
+  list-style: none;
+}
+
+.navbar .dropdown .dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+  padding: 0.5rem 1rem;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.navbar .dropdown .dropdown-menu li a:hover {
+  background-color: #575757;
+}
+
+
+.navbar .dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.navbar .dropdown .dropdown-toggle i {
+  font-size: 0.9rem;
+}
+
+
+@media (max-width: 768px) {
+  .navbar .dropdown .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .navbar .dropdown .dropdown-menu li a {
+    padding: 0.75rem 1rem;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+              url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Appointment form styling */
+form {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 20px;
+background: #fff;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+margin: 20px auto;
+width: 90%;
+max-width: 400px;
+}
+
+label {
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+input[type="date"],
+select {
+width: 100%;
+padding: 10px;
+margin-bottom: 20px;
+border-radius: 5px;
+border: 1px solid #ddd;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button {
+background-color: #4caf50;
+color: white;
+border: none;
+padding: 10px 15px;
+border-radius: 5px;
+cursor: pointer;
+font-size: 16px;
+transition: background-color 0.3s ease, transform 0.2s ease;
+text-decoration: none;
+margin-top: 10px;
+}
+
+button.available {
+background-color: #4caf50;
+}
+
+
+  
+
+button.booked {
+background-color: #ccc;
+cursor: not-allowed;
+color: white;
+border: none;
+padding: 10px;
+margin: 5px;
+}
+
+.button-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 10px;
+}
+
+.booking-details{
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 20px;
+background: rgba(255,255,255);
+border-radius: 10px;
+margin: 20px auto;
+color:black;
+width: 90%;
+max-width: 400px;
+
+}
+
+.booked-slots-container {
+margin: 20px auto;
+padding: 15px;
+background: rgba(255, 0, 0, 0.1); /* Light red */
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+border: 1px solid red;
+max-width: 400px;
+width: 90%;
+}
+
+.booked-slots-container h3 {
+text-align: center;
+color: red;
+margin-bottom: 10px;
+}
+
+.booked-slots-container ul {
+list-style: none;
+padding: 0;
+}
+
+.booked-slots-container li {
+color: black;
+margin: 5px 0;
+}

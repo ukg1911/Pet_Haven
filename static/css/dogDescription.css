@@ -1,0 +1,336 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /*navbar*/
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #28a745;
+            padding: 1rem 2rem;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%; 
+            height: 70px; 
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 60px;
+            width: 80px;
+            object-fit: contain;
+            background-color: transparent;
+            display: block;
+        }
+
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff; 
+            font-family: 'Pacifico', cursive; 
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span::after {
+           content: '\f1b0'; 
+           font-family: 'Font Awesome 5 Free'; 
+           font-weight: 900;
+           font-size: 1.2rem;
+           color: black; 
+        }
+
+        .nav-links {
+            list-style: none;
+             display: flex;
+             justify-content: space-around; 
+             align-items: center;
+             gap: 0; 
+             margin: 0;
+             padding: 0;
+            }
+        
+
+        .nav-links li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+       .navbar .dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .dropdown .dropdown-toggle {
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; 
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+       .navbar .dropdown .dropdown-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+       .navbar .dropdown .dropdown-menu {
+            display: none; 
+            position: absolute;
+            top: calc(100% + 5px); 
+            right: 0; 
+            background-color: #333;
+            border-radius: 8px;
+            min-width: 200px;
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+        }
+
+
+      .navbar .dropdown .dropdown-menu li {
+            list-style: none;
+       }
+
+      .navbar .dropdown .dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; 
+            padding: 0.5rem 1rem;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+       }
+
+       .navbar .dropdown .dropdown-menu li a:hover {
+            background-color: #575757;
+       }
+
+       .navbar .dropdown:hover .dropdown-menu {
+            display: block;
+       }
+       
+       .navbar .dropdown .dropdown-toggle i {
+            font-size: 0.9rem;
+       }
+
+       @media (max-width: 768px) {
+        .navbar .dropdown .dropdown-menu {
+            position: static;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 0;
+        }
+        
+        .navbar .dropdown .dropdown-menu li a {
+            padding: 0.75rem 1rem;
+        }
+        }
+
+        
+        .dog-details {
+            background: linear-gradient(135deg, #f9f9f9, #e3fce7);
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+            margin: auto;
+            position: relative;
+        }
+
+        .dog-details img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .dog-details h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .dog-details h1::before {
+            content: "🐶"; 
+            position: absolute;
+            left: -40px;
+            font-size: 36px;
+        }
+
+        .dog-details p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .dog-details p strong {
+            font-weight: bold;
+            color: #333;
+        }
+
+     
+        .dog-details .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 20px 0 10px;
+            text-align: left;
+            position: relative;
+        }
+
+        .dog-details .section-title::before {
+            content: "🌟"; 
+            position: absolute;
+            left: -30px;
+            font-size: 20px;
+        }
+
+        .dog-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dog-details ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dog-details ul li::before {
+            content: "✔️"; 
+            font-size: 18px;
+            color: #4CAF50;
+        }
+
+       
+        .add-to-cart {
+            margin: 10px;
+            background-color: transparent; 
+            border: none; 
+            cursor: pointer; 
+            padding: 5px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .add-to-cart i {
+            color: #28a745; 
+            font-size: 24px; 
+             transition: color 0.3s ease;
+            }
+            .add-to-cart:focus {
+                outline: none; 
+                 
+            }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            
+        }
+
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .back-link:hover {
+            background-color: #1e7e34;
+        }
+
+        .back-to-admin-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #45a049;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-to-admin-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .back-to-admin-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .add-to-wishlist {
+            margin: 10px; 
+            display: inline-flex; 
+            align-items: center; 
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 27px; 
+            gap: 8px; 
+            padding: 0;
+        }
+
+        .add-to-wishlist .far {
+            display: inline-block; 
+            color: black;
+        }
+
+        .add-to-wishlist .fas {
+            display: none;
+            color: #c62828; 
+        }
+
+        .add-to-wishlist.added .far {
+            display: none !important;
+        }
+
+        .add-to-wishlist.added .fas {
+            display: inline-block !important; 
+        }
+        .add-to-wishlist:hover {
+            transform: translateY(-2px);
+        }
+        

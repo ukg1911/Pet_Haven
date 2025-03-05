@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Haven- Payment Options</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+    <link rel="stylesheet" href="../static/css/payments.css">
+    <link rel="stylesheet" href="../static/css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+            <span>Pet Haven</span>
+        </div>
+        <div class="user-container">
+            <nav>
+                <ul class="nav-links">
+                    <li>
+                        <a href="/checkout"><i class="fas fa-arrow-left"></i></a></li>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </nav>
+
+    <div class="body-container">
+        <div class="payment-container">
+            <h1>Choose Your Payment Method</h1>
+
+            <form id="paymentForm" method="POST" action="{{ url_for('submit_payment') }}" novalidate>
+                <!-- UPI Payment Option -->
+                <div class="payment-option">
+                    <input type="radio" id="upi" name="paymentMethod" value="upi" required>
+                    <label for="upi"><i class="fas fa-mobile-alt"> </i> UPI (Pay via any App)</label>
+                    <div class="payment-details" id="upiDetails" style="display: none;">
+                        <label for="upiId">Enter UPI ID:</label>
+                        <input type="text" id="upiId" pattern="[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}" placeholder="e.g., yourname@bank">
+                        <span class="error-message" id="upiError"></span>
+                    </div>
+                </div>
+
+                <!-- Credit Card Payment Option -->
+                <div class="payment-option">
+                    <input type="radio" id="creditCard" name="paymentMethod" value="creditCard">
+                    <label for="creditCard"><i class="fas fa-credit-card"></i> Credit Card</label>
+                    <div class="payment-details" id="creditCardDetails" style="display: none;">
+                        <label for="CardNumber">Card Number:</label>
+                        <input type="text" id="CardNumber" maxlength="19" placeholder="1234 5678 9012 3456">
+                        <span class="error-message" id="CardNumberError"></span>
+
+                        <div class="card-info">
+                            <div>
+                                <label for="ExpiryDate">Expiry Date:</label>
+                                <input type="text" id="ExpiryDate" maxlength="5" placeholder="MM/YY">
+                                <span class="error-message" id="ExpiryError"></span>
+                            </div>
+                            <div>
+                                <label for="Cvv">CVV:</label>
+                                <input type="password" id="Cvv" maxlength="3" placeholder="123">
+                                <span class="error-message" id="CvvError"></span>
+                            </div>
+                        </div>
+                        <label for="CardName">Name on Card:</label>
+                        <input type="text" id="CardName" placeholder="Your Name here">
+                        <span class="error-message" id="CardNameError"></span>
+                    </div>
+                </div>
+
+                <!-- Debit Card Payment Option -->
+                <div class="payment-option">
+                    <input type="radio" id="debitCard" name="paymentMethod" value="debitCard">
+                    <label for="debitCard"> <i class="fas fa-credit-card"> </i> Debit Card</label>
+                    <div class="payment-details" id="debitCardDetails" style="display: none;">
+                        <label for="debitCardNumber">Card Number:</label>
+                        <input type="text" id="debitCardNumber" maxlength="19" placeholder="1234 5678 9012 3456">
+                        <span class="error-message" id="debitCardNumberError"></span>
+
+                        <div class="card-info">
+                            <div>
+                                <label for="debitExpiryDate">Expiry Date:</label>
+                                <input type="text" id="debitExpiryDate" maxlength="5" placeholder="MM/YY">
+                                <span class="error-message" id="debitExpiryError"></span>
+                            </div>
+                            <div>
+                                <label for="debitCvv">CVV:</label>
+                                <input type="password" id="debitCvv" maxlength="3" placeholder="123">
+                                <span class="error-message" id="debitCvvError"></span>
+                            </div>
+                        </div>
+                        <label for="debitCardName">Name on Card:</label>
+                        <input type="text" id="debitCardName" placeholder="Your Name here">
+                        <span class="error-message" id="debitCardNameError"></span>
+                    </div>
+                </div>
+
+                <div class="payment-option">
+                    <input type="radio" id="cod" name="paymentMethod" value="cod">
+                    <label for="cod"><i class="fas fa-truck"></i> Cash on Delivery</label>
+                    <div class="payment-details" id="codDetails" style="display: none;">
+                        <p>You will pay when the product is delivered to your address.</p>
+                    </div>
+                </div>
+
+                  
+                <!-- Hidden user_id field -->
+                <input type="hidden" name="user_id" value="{{ user_id }}">
+
+                <button type="submit" class="submit-button">Submit Payment</button>
+            </form>
+
+            <div id="confirmation" class="confirmation-message"></div>
+        </div>
+    </div>
+
+    <script src="../static/js/payments.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.6.0/validator.min.js"></script>
+</body>
+
+</html>

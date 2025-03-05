@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Details - Pet Haven</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dogDescription.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+            <span>Pet Haven</span>
+          </div>
+        <ul class="nav-links">
+            {% if admin %}
+            <li><a href="/admin_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{{ url_for('admin_view') }}"><i class="fas fa-dog"></i> Dogs</a></li>
+            {% else %}
+            <li><a href="/customer_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/d"><i class="fas fa-dog"></i> Dogs</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle"><i class="fa-solid fa-user"></i> Account <span>&#9662;</span></a>
+                <ul class="dropdown-menu">
+                   <li><a href="/wishlist"><i class="fas fa-heart"></i> My Wishlist</a></li>
+                    <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                </ul>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <main>
+        <section class="dog-details">
+            <img src="{{ url_for('static', filename=dog.image) }}" alt="{{ dog.breed }}">
+            <h1>{{ dog.name }}</h1>
+            <p><strong>Age:</strong> {{ dog.age }} months</p>
+            <p><strong>Price:</strong> ₹ {{ dog.price }}</p>
+            <p><strong>Traits:</strong> {{ dog.traits }}</p>
+            <p><strong>Vaccination Details:</strong> {{ dog.vaccination_details }}</p>
+            <p><strong>Health Information:</strong> {{ dog.health_info }}</p>
+            <p><strong>Grooming Info:</strong> {{ dog.grooming_info }}</p>
+            <p><strong>Trainability:</strong> {{ dog.trainability }}</p>
+            <p><strong>Height:</strong> {{ dog.height }} inches</p>
+            <p><strong>Weight:</strong> {{ dog.weight }} kgs</p>
+
+            <!-- Buttons for Admin and User -->
+            {% if admin %}
+            <a href="{{ url_for('admin_view') }}" class="back-link">Back to Gallery</a>
+            {% else %}
+            <button class="add-to-cart" data-id="{{ dog.id }}" aria-label="Add to Cart">
+                <i class="fas fa-cart-plus"></i>
+            </button>
+            <button class="add-to-wishlist" data-id="{{ dog.id }}" aria-label="Add to Wishlist">
+                <i class="far fa-heart"></i> <!-- Initially outline heart -->
+                <i class="fas fa-heart"></i> <!-- Filled heart, hidden by default -->
+            </button>
+            {% endif %}
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/dogDescription.js') }}"></script>
+</body>
+
+</html>

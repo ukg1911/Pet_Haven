@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Trainer Information Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/trainer_validation_form.css') }}">
+    <script>
+        // Helper function to display error messages in the span element
+        function displayError(input, message) {
+            const errorSpan = input.closest('section').querySelector('.error-message');
+            if (errorSpan) {
+                errorSpan.textContent = message;
+                errorSpan.style.display = 'block';
+            }
+        }
+
+        // Helper function to clear error messages
+        function clearError(input) {
+            const errorSpan = input.closest('section').querySelector('.error-message');
+            if (errorSpan) {
+                errorSpan.textContent = '';
+                errorSpan.style.display = 'none';
+            }
+        }
+
+        // Validate Name (should only contain letters and spaces)
+        function validateName(input) {
+            const namePattern = /^[A-Za-z\s]+$/;
+            if (!namePattern.test(input.value)) {
+                displayError(input, "Please enter a valid name (letters and spaces only).");
+                return false;
+            }
+            clearError(input);
+            return true;
+        }
+
+        // Validate phone number (should be a 10-digit number with optional spaces or dashes)
+        function validatePhoneNumber(input) {
+            const phonePattern = /^[0-9]{10}$/; // 10 digits
+            if (!phonePattern.test(input.value)) {
+                displayError(input, "Please enter a valid phone number (10 digits).");
+                return false;
+            }
+            clearError(input);
+            return true;
+        }
+
+        // Validate Email format
+        function validateEmail(input) {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(input.value)) {
+                displayError(input, "Please enter a valid email address.");
+                return false;
+            }
+            clearError(input);
+            return true;
+        }
+
+        // Validate the file size (for government id and certifications)
+        function validateFileSize(input) {
+            const file = input.files[0];
+            const errorSpan = input.closest('section').querySelector('.error-message');
+            if (file && file.size > 10485760) { // 10MB in bytes
+                errorSpan.textContent = "File size must be less than 10MB.";
+                errorSpan.style.display = 'block';
+                input.value = ''; // Clear the input
+            } else {
+                errorSpan.textContent = '';
+                errorSpan.style.display = 'none';
+            }
+        }
+
+        // Trigger validation before form submission
+        function validateForm(event) {
+            const nameInput = document.querySelector("input[name='full_name']");
+            const phoneInput = document.querySelector("input[name='phone_number']");
+            const emailInput = document.querySelector("input[name='email']");
+            const governmentIdFile = document.querySelector("input[name='government_id']");
+            const certificationFile = document.querySelector("input[name='certification']");
+
+            // Validate name format
+            if (!validateName(nameInput)) {
+                event.preventDefault();
+                return false;
+            }
+
+            // Validate phone number format
+            if (!validatePhoneNumber(phoneInput)) {
+                event.preventDefault();
+                return false;
+            }
+
+            // Validate email format
+            if (!validateEmail(emailInput)) {
+                event.preventDefault();
+                return false;
+            }
+
+            // Validate file size for government ID and certification
+            if (certificationFile && certificationFile.files.length > 0) {
+                validateFileSize(certificationFile);
+            }
+
+            if(certificationFile  && certificationFile.files.length == 0) {
+                input.value = null;
+            }
+            
+            if (governmentIdFile && governmentIdFile.files.length > 0) {
+                validateFileSize(governmentIdFile);
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Pet Trainer Information Form</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="alert alert-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('submit_trainer_info') }}" method="POST" enctype="multipart/form-data" onsubmit="validateForm(event)">
+            <section>
+                <h2>1. Full Name of Trainer</h2>
+                <input type="text" name="full_name" placeholder="Enter full name" required oninput="validateName(this)">
+                <span class="error-message" style="display:none; color: red;"></span>
+            </section>
+
+            <section>
+                <h2>2. Contact Information</h2>
+                <label>Phone Number:</label>
+                <input type="tel" name="phone_number" placeholder="Enter phone number" required oninput="validatePhoneNumber(this)" pattern="[0-9]{10}">
+                <span class="error-message" style="display:none; color: red;"></span>
+                <label>Email Address:</label>
+                <input type="email" name="email" placeholder="Enter email address" required oninput="validateEmail(this)">
+                <span class="error-message" style="display:none; color: red;"></span>
+                <label>Website (if applicable):</label>
+                <input type="url" name="website" placeholder="Enter website URL">
+            </section>
+
+            <section>
+                <h2>3. Government Id</h2>
+                <label>Government ID Type:</label>
+                <select name="government_id_type" required>
+                    <option value="passport">Passport</option>
+                    <option value="driver_license">Driver's License</option>
+                    <option value="national_id">Aadhaar</option>
+                </select>
+                <span class="error-message" style="display:none; color: red;"></span>
+                <label>Government ID Number:</label>
+                <input type="text" name="government_id_number" placeholder="Enter government ID number" required>
+                <span class="error-message" style="display:none; color: red;"></span>
+                <label>Upload Government ID:</label>
+                <input type="file" name="government_id" accept="application/pdf" required onchange="validateFileSize(this)">
+                <span class="error-message" style="display:none; color: red;"></span>
+            </section>
+
+            <section>
+                <h2>4. Professional Certifications</h2>
+                <label>Certification Name:</label>
+                <input type="text" name="certification_name" placeholder="Enter certification body" >
+
+                <label>Certification Number (if applicable):</label>
+                <input type="text" name="certification_number" placeholder="Enter certification number" >
+
+                <label>Upload Certification:</label>
+                <input type="file" name="certification" accept="application/pdf" onchange="validateFileSize(this)">
+                <span class="error-message" style="display:none; color: red;"></span>
+            </section>
+
+            <section>
+                <h2>5. Educational Background</h2>
+                <label>Degree/Program:</label>
+                <input type="text" name="degree" placeholder="Enter degree/program">
+
+                <label>Institution Name:</label>
+                <input type="text" name="institution_name" placeholder="Enter institution name">
+
+                <label>Graduation Year:</label>
+                <input type="number" name="graduation_year" placeholder="Enter graduation year" max="{{ current_year }}">
+                <script>
+                    document.querySelector('input[name="graduation_year"]').max = new Date().getFullYear();
+                </script>
+            </section>
+
+            <section>
+                <h2>6. Years of Experience in Pet Training</h2>
+                <input type="number" name="experience_years" placeholder="Enter years of experience" required>
+                <span class="error-message" style="display:none; color: red;"></span>
+            </section>
+
+            <section>
+                <h2>7. Specialization(s)</h2>
+                <label>Specific Species:</label>
+                <input type="text" name="species" placeholder="E.g., dogs, cats, exotic pets" required>
+                <label>Specific Behavioral Issues:</label>
+                <input type="text" name="behavioral_issues" placeholder="E.g., aggression, anxiety">
+                <span class="error-message" style="display:none; color: red;"></span>
+            </section>
+
+            <section>
+                <h2>8. Training Philosophy</h2>
+                <textarea name="training_philosophy" placeholder="Describe your training methods" required></textarea>
+                <span class="error-message" style="display:none; color: red;"></span>
+            </section>
+
+            <section>
+                <h2>9. Approach to Behavioral Issues</h2>
+                <textarea name="approach_behavioral_issues" placeholder="Common problems you specialize in addressing"></textarea>
+            </section>
+
+            <section>
+                <h2>10. Client Testimonials/References</h2>
+                <label>References:</label>
+                <textarea name="references" placeholder="Enter names and contact info"></textarea>
+
+                <label>Sample Reviews:</label>
+                <textarea name="reviews" placeholder="Enter sample reviews"></textarea>
+            </section>
+
+            <section>
+                <h2>11. Insurance Information</h2>
+                <label>Liability Insurance Coverage:</label>
+                <select name="insurance_coverage">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+
+                <label>Insurance Provider (if applicable):</label>
+                <input type="text" name="insurance_provider" placeholder="Enter insurance provider">
+            </section>
+
+            <section>
+                <h2>12. Training Plans</h2>
+                <textarea name="training_plans" placeholder="Describe how you customize training plans"></textarea>
+            </section>
+
+            <section>
+                <h2>13. Progress Monitoring</h2>
+                <textarea name="progress_monitoring" placeholder="How do you track progress?"></textarea>
+            </section>
+
+            <section>
+                <h2>14. Continued Education/Professional Development</h2>
+                <textarea name="continued_education" placeholder="Describe ongoing education or certifications"></textarea>
+            </section>
+
+            <section>
+                <h2>15. Communication Style</h2>
+                <textarea name="communication_style" placeholder="How do you communicate with pet owners?"></textarea>
+            </section>
+
+            <section>
+                <h2>16. Ethical Considerations</h2>
+                <textarea name="ethical_considerations" placeholder="How do you ensure welfare and safety?"></textarea>
+            </section>
+
+            <section>
+                <h2>17. Facilities/Equipment</h2>
+                <textarea name="facilities_equipment" placeholder="Describe training environment and equipment"></textarea>
+            </section>
+
+            <section>
+                <h2>18. Availability and Pricing</h2>
+                <label>Hours of Operation:</label>
+                <input type="text" name="hours_of_operation" placeholder="Enter hours" required>
+                <span class="error-message" style="display:none; color: red;"></span>
+                <label>Session Fees:</label>
+                <input type="text" name="session_fees" placeholder="Enter fees" required>
+                <span class="error-message" style="display:none; color: red;"></span>
+            </section>
+
+            <section>
+                <h2>19. Additional Notes</h2>
+                <textarea name="additional_notes" placeholder="Enter additional information"></textarea>
+            </section>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Haven - Checkout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Haven Logo">
+            <span>Pet Haven</span>
+        </div>
+        <div class="user-container">
+            <nav>
+                <ul class="nav-links">
+                    <li>
+                        <a href="/cart"><i class="fas fa-arrow-left"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="checkout-container">
+            <div class="shipping-form">
+                <h2>
+                    <center>Checkout</center>
+                </h2>
+                <div class="shipping-info">
+                    <h3>Shipping Information</h3>
+                    <form id="checkoutForm">
+                        <div class="form-group">
+                            <label for="fullName">Full name *</label>
+                            <input type="text" id="fullName" placeholder="Enter full name" required>
+                            <div id="fullNameError" class="error-message">Please enter your full name</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email address *</label>
+                            <input type="email" id="email" placeholder="Enter email address" required>
+                            <div id="emailError" class="error-message">Please enter a valid email address</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone number *</label>
+                            <input type="text" id="phone" placeholder="Enter phone number" required>
+                            <div id="phoneError" class="error-message">Please enter a valid 10-digit phone number</div>
+                        </div>
+
+                        <div class="address-grid">
+                            <div class="form-group">
+                                <label for="HouseNo">House No. *</label>
+                                <input type="text" id="HouseNo" placeholder="Enter house number" required>
+                                <div id="HouseNoError" class="error-message">Please enter a house number</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="landmark">Landmark </label>
+                                <input type="text" id="landmark" placeholder="Enter landmark">
+                                <div id="landmarkError" class="error-message">Please enter a valid landmark</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <input type="text" id="city" placeholder="Enter city">
+                                <div id="cityError" class="error-message">Please enter a valid city name</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State *</label>
+                                <input type="text" id="state" placeholder="Enter state">
+                                <div id="stateError" class="error-message">Please enter a valid state name</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincode">PIN Code *</label>
+                                <input type="text" id="pincode" placeholder="Enter PIN code">
+                                <div id="pincodeError" class="error-message">Please enter a valid 6-digit PIN code</div>
+                            </div>
+                        </div>
+                        {%for it in cart_data.cart_items%}
+                        {%if it.title%}
+                            <form id="dogRegistrationForm" novalidate>
+                                <h3>Enter dog details for registration:</h3>
+                                <div class="form-group">
+                                    <label for="dog-name">Dog's Name:</label>
+                                    <input type="text" id="dog-name" name="name" value="{{ request.form.name }}"
+                                        placeholder="Enter your dog's name" required>
+                                    <div id="dogNameError" class="error-message">Please enter a valid dog name (letters and spaces only)</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="breed">Breed:</label>
+                                    <input type="text" id="breed" name="breed" value="{{ request.form.breed }}"
+                                        placeholder="Enter breed" required>
+                                    <div id="breedError" class="error-message">Please enter a valid breed (letters and spaces only)</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">Age (in months):</label>
+                                    <input type="number" id="age" name="age" value="{{ request.form.age }}"
+                                        placeholder="Enter age in months" required>
+                                    <div id="ageError" class="error-message">Please enter a valid age between 0 and 360 months</div>
+                                </div>
+                            </form>
+                        {%endif%}
+                    {%endfor%}
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">
+                                <a href="#" id="termsLink">I have read and agree to the Terms and Conditions.</a>
+                            </label>
+                            <div id="termsError" class="error-message">You must agree to the Terms and Conditions</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="cart-summary">
+                <h2>
+                    <center>Review your cart</center>
+                </h2>
+                <br>
+                <div class="cart-items">
+                    {% for item in cart_data.cart_items %}
+                        <div class="cart-item">
+                            <div class="item-details">
+                                <h4>{{ item.breed if item.breed else (item.tname if item.tname else item.title) }}</h4>
+                                {% if item.breed %}
+                                   <img src="{{ url_for('static', filename=item['image']) }}" alt="{{ item['title'] or item['breed'] }}">
+                                    <p>Quantity: {{ item.quantity }}x</p>
+                                    <p class="price">₹{{ item.price * item.quantity }}</p>
+                                {% elif item.title %}
+                                    <p>Date: {{ item.date }}</p>
+                                    <p>Time: {{ item.time }}</p>
+                                    <p class="price">₹{{ item.price }}</p>
+                                {% elif item.tname %}
+                                    <p>Service: {{ item.service_name }}</p>
+                                    <p>Booking date: {{item.booking_date}}</p>
+                                    <p class="price">₹{{ item.price }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="price-summary">
+                    <div class="price-row">
+                        <span>Total Items</span>
+                        <span>{{ cart_data.total_quantity }}</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>Total Amount</span>
+                        <span>₹{{ cart_data.total_price }}</span>
+                    </div>
+                </div>
+                <button id="payNow" class="pay-button">Pay Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Terms and Conditions</h2>
+            <p>Welcome to Pet Haven! These terms and conditions outline the rules and regulations for the use of our website and services. By accessing this website, we assume you accept these terms and conditions. Do not continue to use Pet Haven if you do not agree to all the terms and conditions stated on this page.</p>
+
+            <h3>1. Use of Our Services</h3>
+            <p>Our services are intended for personal and non-commercial use. By using our services, you agree to comply with all applicable laws and regulations.</p>
+
+            <h3>2. Intellectual Property</h3>
+            <p>All content on this website, including text, images, logos, and graphics, is the property of Pet Haven and is protected by intellectual property laws. Unauthorized use of our content is strictly prohibited.</p>
+
+            <h3>3. User Responsibilities</h3>
+            <p>As a user of Pet Haven, you agree to:</p>
+            <ul>
+                <li>Provide accurate and up-to-date information when creating an account or booking services.</li>
+                <li>Maintain the confidentiality of your account credentials.</li>
+                <li>Refrain from using our services for any unlawful or harmful activities.</li>
+            </ul>
+
+            <h3>4. Limitation of Liability</h3>
+            <p>Pet Haven shall not be held liable for any damages arising from the use or inability to use our services, including but not limited to direct, indirect, incidental, or consequential damages.</p>
+
+            <h3>5. Termination</h3>
+            <p>We reserve the right to suspend or terminate your access to our services at our discretion, without prior notice, if you violate these terms and conditions.</p>
+
+            <h3>6. Changes to Terms</h3>
+            <p>We may update these terms and conditions from time to time. Any changes will be posted on this page, and your continued use of our services constitutes your acceptance of the updated terms.</p>
+             
+            <h3>7. No cancelation </h3>
+            <p>Cancelation is not permitted under any circumstances. </p>
+            
+            <h3>8. Contact Us</h3>
+            <p>If you have any questions about these terms and conditions, please contact us at <a href="mailto:support@pethaven.com">companypethaven@gmail.com</a>.</p>
+            
+            
+        </div>
+    </div>
+
+<script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
+</body>
+</html>

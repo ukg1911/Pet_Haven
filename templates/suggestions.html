@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Suggestions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result p {
+            font-size: 18px;
+            color: #555;
+        }
+        .category {
+            margin-top: 20px;
+        }
+        .category h2 {
+            margin-bottom: 10px;
+            color: #00796b;
+            font-size: 18px;
+        }
+        .category ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .category li {
+            margin-bottom: 8px;
+            color: #444;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Revenue Prediction and Suggestions</h1>
+        <div class="result">
+            <p><strong>Predicted Revenue:</strong> <span id="predicted-revenue">Loading...</span></p>
+        </div>
+        <div id="suggestions-container">
+            <!-- Suggestions will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Fetch the data from the API and display it on the page
+        fetch('/api/suggestions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "year": 2025,
+                "dog_sales": 500000,
+                "competition_amount": 300000,
+                "commission": 10000
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display predicted revenue
+            document.getElementById('predicted-revenue').textContent = data.predicted_revenue;
+
+            // Display suggestions categorized by type
+            const suggestionsContainer = document.getElementById('suggestions-container');
+            const categories = data.suggestions;
+
+            Object.keys(categories).forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.classList.add('category');
+                
+                // Add category title
+                const title = document.createElement('h2');
+                title.textContent = category;
+                categoryDiv.appendChild(title);
+
+                // Add suggestions list
+                const ul = document.createElement('ul');
+                categories[category].forEach(suggestion => {
+                    const li = document.createElement('li');
+                    li.textContent = suggestion;
+                    ul.appendChild(li);
+                });
+                categoryDiv.appendChild(ul);
+
+                suggestionsContainer.appendChild(categoryDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching suggestions:', error));
+    </script>
+</body>
+</html>

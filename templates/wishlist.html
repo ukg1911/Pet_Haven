@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - Pet Haven</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wishlist.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+            <span>Pet Haven</span>
+          </div>
+        <ul class="nav-links">
+
+            <li><a href="/d"><i class="fas fa-dog"></i> Dogs</a></li>
+            <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+        </ul>
+    </nav>
+
+    <h3>
+        <center>My Wishlist <i class="fas fa-heart"></i></center>
+    </h3>
+    <br>
+    <div class="main-container">
+        {% for item in wishlist_items %}
+            <div class="wishlist-item">
+                <img src="{{ url_for('static', filename=item['image']) }}" alt="{{ item['breed'] }}">
+                <h4>Breed: {{ item.breed }}</h4>
+                <p>Age: {{ item.age }} months</p>
+                <p>Price: ₹ {{ item.price }}</p>
+    
+                <!-- Button Container -->
+                <div class="button-container">
+                    <button class="remove-from-wishlist" data-id="{{ item.id }}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="add-to-cart-from-wishlist" data-id="{{ item.dog_id }}" aria-label="Add to Cart">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                </div>
+            </div>
+        {% else %}
+            <div class="parent-container">
+                <h5>Your wishlist is empty!</h5>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/wishlist.js') }}"></script>
+
+</body>
+
+</html>

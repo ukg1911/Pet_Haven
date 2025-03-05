@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Competition Management</title>
+    <style>
+      body {
+        background: url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg') ;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-blend-mode: overlay;
+        color: black;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+      .form-container {
+        background-color: rgba(255, 255, 255, 0.7);
+        border: 1px solid black;
+        color: black;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 400px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .form-container input,
+      .form-container textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+      .form-container textarea {
+        resize: vertical;
+      }
+      .form-container button {
+        padding: 10px 20px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .form-container button:hover {
+        background-color: rgb(59, 149, 59);
+      }
+      .error {
+        color: red;
+        font-size: 0.9em;
+        margin-top: 5px;
+      }
+
+      .back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #1e446c;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .back-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+
+
+    </style>
+  </head>
+  <body>
+    <h1>Dog Competition Management</h1>
+    <p>Add a new competition using the form below:</p>
+
+    <div class="form-container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <div class="{{ category }}">{{ message }}</div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      <form id="competitionForm" method="POST" action="{{ url_for('add_competition') }}">
+        <label for="competition_name">Competition Name:</label>
+        <input
+          type="text"
+          id="competition_name"
+          name="competition_name"
+          placeholder="Enter Competition Name"
+          pattern="[A-Za-z\s]{3,50}"
+          title="Name should only contain letters and spaces, 3-50 characters long"
+          required
+        />
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required />
+
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          placeholder="Enter competition description"
+          minlength="10"
+          maxlength="200"
+          required
+        ></textarea>
+
+        <label for="price">Price (₹):</label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          placeholder="Enter competition price"
+          min="1"
+          required
+        />
+
+        <div id="errorMessages" class="error"></div>
+        <button type="submit">Add Competition</button>
+
+        <a href="/admin4" class="back-link">Back to Competitions</a>
+      </form>
+    </div>
+
+    <script>
+      document.getElementById("competitionForm").addEventListener("submit", function (event) {
+        const errorMessages = [];
+        const competitionName = document.getElementById("competition_name").value.trim();
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const description = document.getElementById("description").value.trim();
+        const price = document.getElementById("price").value;
+  
+        if (!/^[A-Za-z\s]{3,50}$/.test(competitionName)) {
+          errorMessages.push("Competition name must be 3-50 characters and contain only letters and spaces");
+          event.preventDefault();
+        }
+      
+        // Date and time validation
+        const now = new Date();
+        const [hours, minutes] = time.split(':').map(Number);
+        const selectedDate = new Date(date);
+        selectedDate.setHours(hours, minutes, 0, 0);
+        
+        // Create today's date at midnight for date comparison
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        // Compare full date and time
+        if (selectedDate.getTime() < now.getTime()) {
+          if (selectedDate.toDateString() === now.toDateString()) {
+            errorMessages.push("Competition time cannot be in the past for today's date");
+          } else {
+            errorMessages.push("Competition date cannot be in the past");
+          }
+          event.preventDefault();
+        }
+      
+        // Description validation
+        if (description.length < 10 || description.length > 200) {
+          errorMessages.push("Description must be between 10 and 200 characters");
+          event.preventDefault();
+        }
+      
+        // Price validation
+        if (price < 1) {
+          errorMessages.push("Price must be a positive value");
+          event.preventDefault();
+        }
+      
+        // Display error messages
+        const errorDiv = document.getElementById("errorMessages");
+        if (errorMessages.length > 0) {
+          errorDiv.innerHTML = errorMessages.join("<br>");
+        } else {
+          errorDiv.innerHTML = "";
+        }
+      });
+    </script>
+  </body>
+</html>

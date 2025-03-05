@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Poppins", serif;
+        font-weight: 100;
+        margin: 0;
+        padding: 0;
+        /* background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(188, 188, 188, 0.5)), url(./d1.jpg) no-repeat center center/cover; */
+        background-color: #f9f9f9;
+      }
+      
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .cards {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 30px;
+        gap: 3rem;
+      }
+      
+      /* nav bar  */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #28a745;
+        padding: 1rem 2rem;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position:relative; 
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        z-index: 1000; 
+      }
+      
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .logo img {
+        height: 60px;
+        width: 80px;
+        object-fit: contain;
+        background-color: transparent;
+      }
+      
+      .logo span {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #fff;
+        font-family: 'Pacifico', cursive;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .logo span::after {
+        content: '\f1b0';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 1.2rem;
+        color: black;
+      }
+      
+      .nav-links {
+        list-style: none;
+         display: flex;
+         justify-content: space-around; 
+         align-items: center;
+         gap: 0; 
+         margin: 0;
+         padding: 0;
+        }
+      
+      
+      .nav-links li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+      
+      .nav-links li a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 1rem; /* Reduced padding for mobile */
+        }
+      
+      }
+      
+      
+      .navbar .dropdown {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      
+      
+      .navbar .dropdown .dropdown-toggle {
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem; 
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+      }
+      
+      .navbar .dropdown .dropdown-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      
+      
+      .navbar .dropdown .dropdown-menu {
+        display: none; 
+        position: absolute;
+        top: calc(100% + 5px); 
+        right: 0; 
+        background-color: #333;
+        border-radius: 8px;
+        min-width: 200px;
+        padding: 0.5rem 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+      }
+      
+      
+      .navbar .dropdown .dropdown-menu li {
+        list-style: none;
+      }
+      
+      .navbar .dropdown .dropdown-menu li a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem; 
+        padding: 0.5rem 1rem;
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+      }
+      
+      .navbar .dropdown .dropdown-menu li a:hover {
+        background-color: #575757;
+      }
+      
+      
+      .navbar .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+      
+      .navbar .dropdown .dropdown-toggle i {
+        font-size: 0.9rem;
+      }
+      
+      
+      @media (max-width: 768px) {
+        .navbar .dropdown .dropdown-menu {
+          position: static;
+          box-shadow: none;
+          border-radius: 0;
+          padding: 0;
+        }
+      
+        .navbar .dropdown .dropdown-menu li a {
+          padding: 0.75rem 1rem;
+        }
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                    url('https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+      }
+            /* Confirmation container styling */
+            .confirmation-container {
+              text-align: center;
+              margin: 50px auto;
+              padding: 20px;
+              background: #fff;
+              border-radius: 10px;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              width: 90%;
+              max-width: 500px;
+              color: #333;
+            }
+        
+            .confirmation-container h1 {
+              font-size: 28px;
+              color: black;
+              margin-bottom: 20px;
+            }
+        
+            .booking-details {
+              margin: 20px 0;
+              text-align: left;
+            }
+        
+            .booking-details p {
+              font-size: 18px;
+              margin: 10px 0;
+              line-height: 1.5;
+              color: black;
+            }
+        
+            .booking-details p strong {
+              color: brown;
+              font-size: 20px;
+              
+            }
+      
+            .booking-actions {
+          text-align: center;
+          margin-top: 20px;
+      }
+      
+      .add-to-cart {
+          background-color: #28a745;; 
+          color: white; 
+          border: none;
+          padding: 10px 20px;
+          font-size: 16px;
+          border-radius: 5px; 
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+      
+      .add-to-cart:hover {
+          background-color: #218838;  
+      }
+      
+      .add-to-cart:active {
+          background-color: #218838;  
+      }
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+       <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+ <span>Pet Haven</span>
+   </div>
+   <ul class="nav-links">
+     <li><a href="/customer_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+     <li><a href="/services" class="nav-link" id="services-link"><i class="fa-solid fa-spa"></i> Services</a></li>
+     <li class="dropdown">
+       <a href="#" class="dropdown-toggle"><i class="fa-solid fa-user"></i> Account <span>&#9662;</span></a>
+       <ul class="dropdown-menu">
+         <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+       </ul>
+     </li>           
+   </ul>
+  </nav>
+    <div class="confirmation-container">
+        <h1>Booking Summary</h1>
+        <div class="booking-details">
+            <p><strong>Trainer:</strong> {{ booking.trainer.tname }}</p>
+            <p><strong>Service:</strong> {{ booking.service.service_name }}</p>
+            <p><strong>Date:</strong> {{ booking.booking_date.strftime('%B %d, %Y') }}</p>
+            <p><strong>Time:</strong> {{ booking.time_slot.time_slot }}</p>
+            <p><strong>Price:</strong> ₹{{ price }}</p>
+        </div>
+        
+        <div class="booking-actions">
+          <button 
+          class="add-to-cart" 
+          data-service-id="{{ booking.service.id }}" 
+          data-trainer-id="{{ booking.trainer.id }}" 
+          data-timeslot-id="{{ booking.time_slot.id }}" 
+          data-booking-date="{{ booking.booking_date.strftime('%Y-%m-%d') }}"
+          onclick="addToCart(event)">
+          Add to Cart
+      </button>      
+        </div>
+    </div>
+
+    <script>
+      function addToCart(event) {
+        const button = event.target;
+    
+        const payload = {
+            service_id3: button.getAttribute('data-service-id'),
+            trainer_id: button.getAttribute('data-trainer-id'),
+            timeslot_id: button.getAttribute('data-timeslot-id'),
+            booking_date: button.getAttribute('data-booking-date')
+        };
+    
+        // Log the payload for debugging
+        console.log('Payload:', payload);
+    
+        // Validate payload
+        const missingFields = Object.entries(payload).filter(([key, value]) => !value);
+        if (missingFields.length > 0) {
+            console.error('Missing fields:', missingFields);
+            showNotification('Missing booking details', 'error');
+            return;
+        }
+    
+        fetch('/add_to_cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message.includes('already')) {
+                showNotification(data.message, 'warning');
+            } else {
+                showNotification('Service added to cart successfully', 'success');
+                updateCartCount(data.total_quantity);
+            }
+        })
+        .catch(error => {
+            console.error('Cart Error:', error);
+            showNotification('Cart add failed', 'error');
+        });
+    }
+    
+    function updateCartCount(quantity) {
+        const cartCountElement = document.getElementById('cart-count');
+        if (cartCountElement) {
+            cartCountElement.textContent = quantity || 0;
+        }
+    }
+
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        
+        Object.assign(notification.style, {
+            position: 'fixed',
+            top: '10%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            padding: '15px 30px',
+            backgroundColor: type === 'success' ? 'blue' : (type === 'warning' ? 'red' : 'red'),
+            color: '#fff',
+            borderRadius: '8px',
+            zIndex: '1000',
+            fontSize: '18px',
+            textAlign: 'center',
+        });
+
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+
+    // Initialize cart count on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/get_cart_count')
+        .then(response => response.json())
+        .then(data => {
+            updateCartCount(data.total_quantity);
+        })
+        .catch(console.error);
+    });
+    </script>
+</body>
+</html>

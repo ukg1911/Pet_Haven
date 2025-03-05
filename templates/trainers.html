@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ service.service_name }} Trainers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/trainers.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+         <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Pet Heaven Logo">
+   <span>Pet Haven</span>
+     </div>
+     <ul class="nav-links">
+       <li><a href="/customer_dashboard" class="nav-link" id="home-link"><i class="fas fa-home"></i> Home</a></li>
+       <li><a href="/services" class="nav-link" id="services-link"><i class="fa-solid fa-spa"></i> Services</a></li>
+       <li class="dropdown">
+         <a href="#" class="dropdown-toggle"><i class="fa-solid fa-user"></i> Account <span>&#9662;</span></a>
+         <ul class="dropdown-menu">
+           <li><a href="/cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+         </ul>
+       </li>           
+     </ul>
+  </nav>
+
+  <div class="trainer-grid">
+    {% for trainer in trainers %}
+    <div class="trainer-card">
+      <img src="{{ trainer.profile_pic }}" alt="{{ trainer.tname }}" width="100" />
+      <h3>{{ trainer.tname }}</h3>
+      <p>Experience: {{ trainer.experience }}</p>
+      <p>Rating: {{ trainer.rating }}</p>
+      <p>{{ trainer.description }}</p>
+      <br />
+      <a class="button" href="{{ url_for('direct_appointment', trainer_id=trainer.id, service_id=trainer.service_id) }}">Book Now</a>
+    </div>
+    {% endfor %}
+  </div>s
+  </body>
+</html>
